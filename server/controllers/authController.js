@@ -44,7 +44,14 @@ exports.login = async (req, res) => {
     try{
         const {email, password} = req.body
 
+        const CheckUser = await User.findOne({ email: email })
+
+        if(!CheckUser){
+            return res.json({Error: "User Not Found"})
+        }
         
+
+
     }
     catch(err){
         console.log(err)
