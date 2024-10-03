@@ -8,9 +8,12 @@ const generateToken = (user) => {
 };
 
 exports.register = async (req, res) => {
-    const { username, email, password} = req.body
-
-    console.log(username)
+    try{
+        console.log(req.body)
+    }
+    catch(err) {
+        console.log(err)
+    }
 }
 
 exports.login = async (req, res) => {
