@@ -15,10 +15,12 @@ const Login = () => {
         e.preventDefault()
 
         try{
-            const res = await axios.post(import.meta.env.VITE_APP_API + `/auth/Login/` + LoginData)
+            const res = await axios.post(import.meta.env.VITE_APP_API + `/auth/Login/`, LoginData)
             .then(res => {
                 if(res.data.Status === "Success"){
                     alert("Login Success")
+                    console.log(token)
+                    console.log(res.data.user._id)
                 }
                 else{
                     alert(res.data.Error)
