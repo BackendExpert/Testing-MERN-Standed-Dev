@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 
 const Login = () => {
@@ -7,11 +8,26 @@ const Login = () => {
     })
 
     const handleChange = (e) => {
-        setFormData({ ...LoginData, [e.target.name]: e.target.value });
+        SetLoginData({ ...LoginData, [e.target.name]: e.target.value });
     };
 
-    const HeadleLogin = (e) => {
+    const HeadleLogin = async (e) => {
         e.preventDefault()
+
+        try{
+            const res = await axios.post(import.meta.env.VITE_APP_API + `/auth/Login/` + LoginData)
+            .then(res => {
+                if(res.data.Status === "Success"){
+                    alert("Login Success")
+                }
+                else{
+                    alert(res.data.Error)
+                }
+            })
+        }
+        catch(err){
+            console.log(err)
+        }
 
         console.log(LoginData)
 
@@ -26,10 +42,10 @@ const Login = () => {
                 <div className="my-4">
                     <form method="post" onSubmit={HeadleLogin}>
                         <div className="py-4">
-                            <input type="email" name="" id="" className="h-12 w-full rounded pl-2" onChange={handleChange} placeholder='Email Address'/>
+                            <input type="email" value={LoginData.email} name="email" className="h-12 w-full rounded pl-2" onChange={handleChange} placeholder='Email Address'/>
                         </div>
                         <div className="py-4">
-                            <input type="password" name="" id="" className="h-12 w-full rounded pl-2" onChange={handleChange} placeholder='Password'/>
+                            <input type="password" value={LoginData.password} name="password" className="h-12 w-full rounded pl-2" onChange={handleChange} placeholder='Password'/>
                         </div>
 
                         <button type="submit" className='bg-blue-500 text-white py-2 px-4 rounded duration-500 hover:bg-blue-500'>Login Here</button>
