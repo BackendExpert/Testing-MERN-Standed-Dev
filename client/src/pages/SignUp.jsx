@@ -1,6 +1,9 @@
+import axios from 'axios';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+    const navigate = useNavigate
     const [SignUpData, SetSignUpData] = useState({
         username: '',
         email: '',
@@ -12,12 +15,24 @@ const SignUp = () => {
     };
 
 
-    const headleSignUp = (e) => {
+    const headleSignUp = async (e) => {
         e.preventDefault()
 
-        console.log(SignUpData)
-
-
+        try{
+            const res = await axios.post(import.meta.env.VITE_APP_API + `/auth/SignUp/` + SignUpData)
+            .then(res => {
+                if(res.data.Status === "Success"){
+                    alert("Registation Success")
+                    navigate('/')
+                }
+                else{
+                    alert(res.data.Error)
+                }
+            })
+        }
+        catch(err) {
+            console.log(err)
+        }
     }
   return (
     <div>
