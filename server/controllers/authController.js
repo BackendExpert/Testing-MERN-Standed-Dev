@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
             return res.json({Error: "User Not Found"})
         }
         
-        const passMatch = await user.comparePassword(password);
+        const passMatch = await CheckUser.comparePassword(password);
 
         if(!passMatch) {
             return res.json({ Error: "Password Not Match..."})
