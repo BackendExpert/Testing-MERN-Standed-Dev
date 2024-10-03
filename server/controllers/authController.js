@@ -50,7 +50,22 @@ exports.login = async (req, res) => {
             return res.json({Error: "User Not Found"})
         }
         
+        const passMatch = await user.comparePassword(password);
 
+        if(!passMatch) {
+            return res.json({ Error: "Password Not Match..."})
+        }
+
+        const token = generateToken(CheckUser);
+
+        return res.json({ Status: "Success", token, 
+            user: {
+                _id: CheckUser._id,
+                username: CheckUser.username,
+                email: CheckUser.email,
+                role: CheckUser.role,
+            },
+        })
 
     }
     catch(err){
