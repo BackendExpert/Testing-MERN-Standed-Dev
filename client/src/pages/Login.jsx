@@ -1,7 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import  secureLocalStorage  from  "react-secure-storage";
 
 const Login = () => {
+    const navigate = useNavigate()
     const [LoginData, SetLoginData] = useState({
         email: '',
         password: ''
@@ -18,9 +21,11 @@ const Login = () => {
             const res = await axios.post(import.meta.env.VITE_APP_API + `/auth/Login/`, LoginData)
             .then(res => {
                 if(res.data.Status === "Success"){
-                    alert("Login Success")
-                    console.log(token)
-                    console.log(res.data.user._id)
+                    alert("Login Success");
+                    localStorage.setItem('token', res.data.token); 
+                    secureLocalStorage.setItem('Login1', res.data.user.email);      
+                    secureLocalStorage.setItem('Login2', res.data.user.role);
+                    navigate('/Dashboard');
                 }
                 else{
                     alert(res.data.Error)
@@ -30,8 +35,6 @@ const Login = () => {
         catch(err){
             console.log(err)
         }
-
-        console.log(LoginData)
 
     }
   return (
