@@ -9,7 +9,22 @@ const generateToken = (user) => {
 
 exports.register = async (req, res) => {
     try{
-        console.log(req.body)
+        // console.log(req.body)
+        const {username, email, password} = req.body
+
+        const CheckUser = await User.findOne({
+            $or: [
+                { email: email },
+                { username: username }
+            ]
+        });
+
+        if(CheckUser){
+            return res.json({ Error: "User Already in Database"})
+        }
+        else{
+            
+        }
     }
     catch(err) {
         console.log(err)
