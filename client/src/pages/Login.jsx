@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { LoginService } from '../services/authService'
 
 const Login = () => {
     const [LoginData, SetLoginData] = useState({
@@ -12,25 +13,14 @@ const Login = () => {
     };
 
     const HeadleLogin = async (e) => {
-        e.preventDefault()
-
-        try{
-            const res = await axios.post(import.meta.env.VITE_APP_API + `/auth/Login/` + LoginData)
-            .then(res => {
-                if(res.data.Status === "Success"){
-                    alert("Login Success")
-                }
-                else{
-                    alert(res.data.Error)
-                }
-            })
+        e.preventDefault();
+        try {
+            LoginService(formData);
+            alert("OK")
+            
+        } catch (error) {
+            console.log('Registration error:', error);
         }
-        catch(err){
-            console.log(err)
-        }
-
-        console.log(LoginData)
-
     }
   return (
     <div>
