@@ -22,8 +22,17 @@ exports.register = async (req, res) => {
         if(CheckUser){
             return res.json({ Error: "User Already in Database"})
         }
-        else{
-            
+
+        const NewUser = new User({
+            username: username,
+            email: email,
+            password: password
+        })
+
+        const saveUser = await NewUser.save()
+
+        if(saveUser){
+            return res.json({ Status: "Success"})
         }
     }
     catch(err) {
